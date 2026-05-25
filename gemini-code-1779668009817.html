@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رفوف | هندسة حلول للتخزين</title>
+    <!-- استدعاء خطوط وأيقونات فخمة -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #111625; 
+            --secondary-color: #c5a880; 
+            --text-dark: #222222;
+            --text-light: #ffffff;
+            --bg-light: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+        }
+
+        /* الشريطة العلوية */
+        .top-bar {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 12px 10%;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(197, 168, 128, 0.2);
+        }
+        .top-bar-info span, .top-bar-contact a {
+            margin-left: 20px;
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        /* الهيدر والقائمة */
+        header {
+            background-color: rgba(17, 22, 37, 0.98);
+            padding: 15px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo-box-placeholder {
+            width: 65px;
+            height: 65px;
+            background: #fff;
+            border: 2px solid var(--secondary-color);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .logo-box-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .logo-text h1 {
+            color: var(--text-light);
+            font-size: 22px;
+            font-weight: 700;
+        }
+        .logo-text span {
+            color: var(--secondary-color);
+            font-size: 13px;
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* البانر الرئيسي */
+        .hero-section {
+            background: linear-gradient(rgba(17, 22, 37, 0.85), rgba(17, 22, 37, 0.9)), url('Y9on7aNGzzsF4HI2a6hDnNsjI8D0WKKfW0KhG6QM.jpg') no-repeat center center/cover;
+            min-height: 65vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--text-light);
+            padding: 40px 20px;
+        }
+        .hero-section h2 {
+            font-size: 42px;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+        .hero-section p {
+            font-size: 19px;
+            max-width: 800px;
+            margin-bottom: 35px;
+            line-height: 1.8;
+        }
+
+        /* الأزرار التفاعلية */
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn-main {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 14px 35px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-main:hover {
+            background-color: #b3956b;
+            transform: translateY(-3px);
+        }
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: white;
+            padding: 14px 35px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-whatsapp:hover {
+            background-color: #20ba5a;
+            transform: translateY(-3px);
+        }
+
+        /* الأقسام */
+        section {
+            padding: 80px 10%;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .section-header h2 {
+            font-size: 32px;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+        .section-header p {
+            color: #666;
+            margin-top: 15px;
+            font-size: 16px;
+        }
+
+        /* المميزات الجودة */
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .feature-box {
+            text-align: center;
+            padding: 30px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        .feature-box:hover {
+            border-bottom-color: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+        .feature-box i {
+            font-size: 40px;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        /* كروت المنتجات والصور */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-top: 4px solid var(--secondary-color);
+            display: flex;
+            flex-direction: column;
+        }
+        .product-img-box {
+            height: 300px;
+            background-color: #eaedf2;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 10px;
+            border-bottom: 1px solid #e1e4e8;
+        }
+        .product-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .img-label-info {
+            z-index: 2;
+            background: rgba(17, 22, 37, 0.85);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-top: auto;
+            border: 1px solid var(--secondary-color);
+            width: 90%;
+        }
+        .product-info {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .product-info h3 {
+            font-size: 20px;
+            color: var(--primary-color);
+            margin-bottom: 12px;
+        }
+        .product-info p {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .specs-list {
+            background-color: var(--bg-light);
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 13px;
+            margin-top: auto;
+        }
+        .specs-list li {
+            list-style: none;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #e1e4e8;
+            padding-bottom: 5px;
+        }
+        .specs-list li:last-child { margin-bottom: 0; border: none; }
+        .specs-list li span { font-weight: bold; color: var(--primary-color); }
+
+        /* قسم الخدمات */
+        .team-section {
+            background-color: #111625;
+            color: white;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
+        .team-text { flex: 1; min-width: 300px; }
+        .team-text h2 { color: var(--secondary-color); font-size: 32px; margin-bottom: 20px; }
+        .team-text p { font-size: 16px; line-height: 1.8; color: #ccc; margin-bottom: 15px; }
+        .team-image { flex: 1; min-width: 300px; text-align: center; }
+        .team-image-box {
+            background: #1c2336;
+            padding: 20px;
+            border: 2px dashed var(--secondary-color);
+            border-radius: 10px;
+            position: relative;
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .team-image-box img {
+            max-width: 100%;
+            border-radius: 6px;
+        }
+
+        /* فروع الخرائط التفاعلية الحقيقية */
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+        }
+        @media (max-width: 500px) { .locations-grid { grid-template-columns: 1fr; } }
+        .location-card {
+            background: white;
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        .location-card h3 {
+            font-size: 20px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .map-container {
+            margin-top: 15px;
+            height: 300px;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #e1e4e8;
+        }
+
+        footer {
+            background-color: #0b0e18;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            font-size: 15px;
+            border-top: 2px solid var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الشريط العلوي للتواصل والمعلومات المباشرة -->
+    <div class="top-bar">
+        <div class="top-bar-info">
+            <span><i class="fa-solid fa-clock"></i> ساعات العمل: من 8:00 صباحاً إلى 10:00 مساءً</span>
+            <span><i class="fa-solid fa-location-dot"></i> فروعنا الرسمية: الدمام & الرياض</span>
+        </div>
+        <div class="top-bar-contact">
+            <a href="tel:0559356715"><i class="fa-solid fa-phone"></i> اتصل بنا: 0559356715</a>
+        </div>
+    </div>
+
+    <!-- الهيدر الرئيسي والشعار -->
+    <header>
+        <div class="logo-container">
+            <div class="logo-box-placeholder">
+                <img src="IMG-20260522-WA0030.jpg" alt="الشعار">
+            </div>
+            <div class="logo-text">
+                <h1>رفوف هندسة</h1>
+                <span>حلول متكاملة للتخزين الذكي</span>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#about">الخدمات والجودة</a></li>
+                <li><a href="#products">أقسام الرفوف</a></li>
+                <li><a href="#locations">فروعنا وخرائطنا</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- القسم الترحيبي -->
+    <section id="home" class="hero-section">
+        <h2>نصنع للمساحات سعة.. وللتخزين هندسة دقيقة</h2>
+        <p>نحن شركة "رفوف هندسة" نتميز بتقديم حلول تخزين حديدية متينة وفخمة تلائم المنازل والمستودعات والهايبر ماركت، معتمدين على أعلى مواصفات الجودة والصلابة لضمان أمان حمولتك.</p>
+        <div class="btn-group">
+            <a href="tel:0559356715" class="btn-main"><i class="fa-solid fa-phone"></i> اتصال هاتفي مباشر</a>
+            <a href="https://wa.me/966559356715" target="_blank" class="btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> تواصل واتساب مباشر</a>
+        </div>
+    </section>
+
+    <!-- قسم الجودة والمميزات -->
+    <section id="about">
+        <div class="section-header">
+            <h2>أعلى معايير الجودة والصلابة</h2>
+            <p>حلول تخزينية صممت هندسياً لتدوم وتتحمل الأوزان الثقيلة والمتوسطة</p>
+        </div>
+        <div class="about-features">
+            <div class="feature-box">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h3>جودة وخامات ممتازة</h3>
+                <p>حديد وفولاذ نقي معالج ضد الصدأ والالتواء لضمان سلامة البضائع والممتلكات.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fa-solid fa-weight-hanging"></i>
+                <h3>حمولة هندسية مدروسة</h3>
+                <p>كل نوع رف يتم اختباره مسبقاً لتحمل الأوزان المخصصة له دون أي خلل هيكلي.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fa-solid fa-truck-moving"></i>
+                <h3>توصيل وتركيب شامل</h3>
+                <p>نوفر خدمة نقل سريعة وتركيب دقيق في موقعك بواسطة طاقم فني محترف وملتزم.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- الأقسام والمنتجات مع أسماء ملفات الصور الدقيقة -->
+    <section id="products" style="background-color: #fff;">
+        <div class="section-header">
+            <h2>تصفح أقسام المنتجات وحلول التخزين</h2>
+            <p>جميع الحلول متوفرة بأوزان ومقاسات دقيقة ومناسبة لكل الاحتياجات</p>
+        </div>
+
+        <div class="products-grid">
+            
+            <!-- قسم 1 -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="Y9on7aNGzzsF4HI2a6hDnNsjI8D0WKKfW0KhG6QM.jpg" alt="رفوف منازل">
+                    <div class="img-label-info"><i class="fa-solid fa-image"></i> ملف الصورة: Y9on7aNGzzsF4HI2a6hDnNsjI8D0WKKfW0KhG6QM.jpg</div>
+                </div>
+                <div class="product-info">
+                    <h3>رفوف تخزين منازل</h3>
+                    <p>أرفف منزلية بتصميم عصري فخم، ممتازة لترتيب الغرف والملحقات والمطابخ، وتوفر متانة وصلابة تضمن لك الأمان الدائم.</p>
+                    <ul class="specs-list">
+                        <li>نوع التحمل: <span>خفيف إلى متوسط</span></li>
+                        <li>الجودة: <span>طلاء مقاوم للرطوبة والخدش</span></li>
+                        <li>الوزن: <span>80 - 100 كجم لكل مستوى رف</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- قسم 2 -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="8ef7b890-af7b-4c74-bc1c-2036fdd58e73-1000x1000-iw4sjFNrvJh7c4Fj6sv9WGm5TzDMZyXaZHNIvVxQ.jpg" alt="رفوف مستودعات ثقيلة">
+                    <div class="img-label-info"><i class="fa-solid fa-image"></i> ملف الصورة المترية: 8e033cd3-4bd2-4781-8862-9a3b03213094-...</div>
+                </div>
+                <div class="product-info">
+                    <h3>رفوف مستودعات - حمولة ثقيلة</h3>
+                    <p>أرفف صناعية سوداء فخمة وهيكلية متينة للمستودعات اللوجستية الكبيرة والمصانع لتجهيز وتخزين الطبالي والأوزان الضخمة.</p>
+                    <ul class="specs-list">
+                        <li>المقاس: <span>ارتفاع 2م × عرض 2م × عمق 60سم</span></li>
+                        <li>وزن التحمل بالصورة: <span>500 كجم معتمدة لكل رف</span></li>
+                        <li>نوع المنتج: <span>Heavy Duty Racking</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- قسم 3 -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="96b8ace6-a29b-4756-861c-23db54b33475-750x1000-KZQsnZZ96mI5fZqtAwnkR8R3IkEEnthz3grXgZZ6.jpg" alt="رفوف خفيفة ومتوسطة">
+                    <div class="img-label-info"><i class="fa-solid fa-image"></i> ملف الصورة: 96b8ace6-a29b-4756-861c-23db54b33475...</div>
+                </div>
+                <div class="product-info">
+                    <h3>رفوف مخازن - حمولة متوسطة وخفيفة</h3>
+                    <p>أرفف باللونين الأزرق والبرتقالي مثالية للتخزين اليدوي المنظم في الشركات والمحلات الكبيرة لسهولة الوصول للبضاعة.</p>
+                    <ul class="specs-list">
+                        <li>المقاس بالصورة: <span>ارتفاع 2م × عرض 2م × عمق 60سم</span></li>
+                        <li>وزن التحمل: <span>300 كجم لكل رف (موضح بملف 324d1ea7...)</span></li>
+                        <li>الاستخدام: <span>مخازن تجارية / قطع غيار</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- قسم 4 -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="7a31e9af61274c07955b2cefa683fadd-.webp" alt="رفوف سوبر ماركت">
+                    <div class="img-label-info"><i class="fa-solid fa-image"></i> ملف الصورة: 7a31e9af61274c07955b2cefa683fadd-.webp</div>
+                </div>
+                <div class="product-info">
+                    <h3>رفوف سوبر ماركت</h3>
+                    <p>وحدات عرض فخمة مزدوجة وجانبية باللون الأسود الملكي، مصممة لعرض المنتجات الغذائية والاستهلاكية في الهايبر ماركت والبقالات بشكل جذاب وجريء.</p>
+                    <ul class="specs-list">
+                        <li>التصميم: <span>أرفف عرض جزيرة (مزدوجة الوجه)</span></li>
+                        <li>الحمولة: <span>60 كجم لكل رف عرض</span></li>
+                        <li>المميزات: <span>سهلة الفك والتركيب والتنظيف</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- قسم 5 -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="17a7af43-dba4-43da-9e63-3128b1a6476b-1000x1000-O8wmOW51aGpeWsr6uCs7vwvEc0ErFihr8sThMGtt.jpg" alt="أنظمة ميزان ومنصات">
+                    <div class="img-label-info"><i class="fa-solid fa-image"></i> ملفات هندسية: 7c0eab5b... / 92b20225...</div>
+                </div>
+                <div class="product-info">
+                    <h3>رفوف تخزين أنظمة ميزان ومنصات</h3>
+                    <p>تصميم ميزانين (Mezzanine) لمضاعفة مساحة التخزين الرأسية في المستودعات عبر إنشاء أسقف حديدية وأرفف ممتدة لأعلى بأمان تام هندسياً.</p>
+                    <ul class="specs-list">
+                        <li>النوع: <span>منصات ميزانين وممرات تخزين علوية</span></li>
+                        <li>الحمولة: <span>تُحسب هندسياً حسب مساحة المستودع</span></li>
+                        <li>الهندسة: <span>مطابق لمواصفات الأمن والسلامة</span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- قسم الخدمات اللوجستية المتخصصة والشعار الفني -->
+    <section id="services" class="team-section">
+        <div class="team-text">
+            <h2>فريق متخصص بفك وتركيب الرفوف</h2>
+            <p>نحن نمتلك طاقم عمل متكامل ومتخصص في فك وتركيب كافة أنواع الأرفف والمنصات الحديدية والميزانين المعقدة لضمان توزيع الثقل بشكل هندسي سليم وآمن تماماً.</p>
+            <p><i class="fa-solid fa-square-check" style="color: var(--secondary-color);"></i> يتوفر لدينا شحن وتوصيل وتركيب متكامل وسريع للموقع.</p>
+            <p><i class="fa-solid fa-square-check" style="color: var(--secondary-color);"></i> معاينة المساحات وتقديم الاستشارات الهندسية الدقيقة لرفع الكفاءة الاستيعابية.</p>
+            <br>
+            <a href="https://wa.me/966559356715" target="_blank" class="btn-main"><i class="fa-brands fa-whatsapp"></i> اطلب فريق التركيب الآن</a>
+        </div>
+        <div class="team-image">
+            <div class="team-image-box">
+                <img src="IMG-20260522-WA0030.jpg" alt="شعار فك وتركيب الرفوف">
+            </div>
+        </div>
+    </section>
+
+    <!-- الفروع مع خرائط قوقل التفاعلية الحقيقية والمواقع المحددة -->
+    <section id="locations" style="background-color: #f0f2f5;">
+        <div class="section-header">
+            <h2>مواقع فروعنا الرسمية</h2>
+            <p>تفضلوا بزيارتنا، متواجدون لخدمتكم يومياً من الساعة 8:00 صباحاً وحتى 10:00 مساءً</p>
+        </div>
+        <div class="locations-grid">
+            
+            <!-- فرع الدمام -->
+            <div class="location-card">
+                <h3><i class="fa-solid fa-location-dot" style="color: #e74c3c;"></i> فرع مدينة الدمام</h3>
+                <p><strong>العنوان:</strong> شارع الملك سعود، الدمام، المملكة العربية السعودية.</p>
+                <div class="map-container">
+                    <!-- خريطة حقيقية تفاعلية لشارع الملك سعود بالدمام -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1m4!1s0x3e49faf099f6947b%3A0x67948259b352cb0a!2z2LTYp9ix2Lkg2KfZhNmF2YTZgyDYs9iReportdiv2Iwg2KfZhNiv2YXYp9mF!5e0!3m2!1sar!2ssa!4v1700000000000!5m2!1sar!2ssa" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+
+            <!-- فرع الرياض -->
+            <div class="location-card">
+                <h3><i class="fa-solid fa-location-dot" style="color: #e74c3c;"></i> فرع مدينة الرياض</h3>
+                <p><strong>العنوان:</strong> شارع الأمير محمد بن عبدالرحمن بن عبدالعزيز، الرياض.</p>
+                <div class="map-container">
+                    <!-- خريطة حقيقية تفاعلية لشارع الأمير محمد بن عبدالرحمن بالرياض -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1m4!1s0x3e2f0426bf765663%3A0x7fe32bfa2f782c5a!2z2LTYp9ix2Lkg2KfZh9ij2YXZitixINmF2K3ZhdivINio2YbYpyDYudio2K_Yp9mE2LHYrdmF2YY!5e0!3m2!1sar!2ssa!4v1700000000000!5m2!1sar!2ssa" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- الفوتر النهائي للموقع -->
+    <footer>
+        <p>© 2026 جميع الحقوق محفوظة لشركة <strong>رفوف هندسة حلول للتخزين</strong></p>
+    </footer>
+
+</body>
+</html>
